@@ -25,20 +25,19 @@ namespace BetterBooks.Models
                 .Map(m => m.ToTable("BookRequest").MapLeftKey("bookId").MapRightKey("userId"));
 
             modelBuilder.Entity<Book>()
-                .HasMany(e => e.Users1)
-                .WithMany(e => e.Books1)
+                .HasMany(e => e.OfferedToUsers)
+                .WithMany(e => e.BooksOfferedToMe)
                 .Map(m => m.ToTable("BookOffer").MapLeftKey("bookId").MapRightKey("userId"));
 
             modelBuilder.Entity<Book>()
-                .HasMany(e => e.Users2)
-                .WithMany(e => e.Books2)
+                .HasMany(e => e.GivenAwayByUsers)
+                .WithMany(e => e.GivingAwayBooks)
                 .Map(m => m.ToTable("GiveAway").MapLeftKey("bookId").MapRightKey("userId"));
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.BorrowedBooks)
                 .WithRequired(e => e.User)
-                .HasForeignKey(e => e.bookId)
-                ;
+                .HasForeignKey(e => e.bookId);
         }
     }
 }

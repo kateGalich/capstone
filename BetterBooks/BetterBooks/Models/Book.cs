@@ -14,25 +14,25 @@ namespace BetterBooks.Models
         {
             BorrowedBooks = new HashSet<BorrowedBook>();
             Users = new HashSet<User>();
-            Users1 = new HashSet<User>();
-            Users2 = new HashSet<User>();
+            OfferedToUsers = new HashSet<User>();
+            GivenAwayByUsers = new HashSet<User>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int bookId { get; set; }
+        public int BookId { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string title { get; set; }
+        public string Title { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string author { get; set; }
+        public string Author { get; set; }
 
         [StringLength(100)]
-        public string description { get; set; }
+        public string Description { get; set; }
 
-        public int ownerId { get; set; }
+        public int OwnerId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BorrowedBook> BorrowedBooks { get; set; }
@@ -41,9 +41,9 @@ namespace BetterBooks.Models
         public virtual ICollection<User> Users { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users1 { get; set; }
+        public virtual ICollection<User> OfferedToUsers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users2 { get; set; }
+        public virtual ICollection<User> GivenAwayByUsers { get; set; }
     }
 }
