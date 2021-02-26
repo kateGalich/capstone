@@ -36,6 +36,7 @@ namespace BetterBooks.Controllers
         }
 
         // GET: Books/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +47,7 @@ namespace BetterBooks.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "BookId,Title,Author,Description,OwnerId")] Book book)
         {
             if (ModelState.IsValid)
@@ -59,6 +61,7 @@ namespace BetterBooks.Controllers
         }
 
         // GET: Books/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +81,7 @@ namespace BetterBooks.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "BookId,Title,Author,Description,OwnerId")] Book book)
         {
             if (ModelState.IsValid)
@@ -90,6 +94,7 @@ namespace BetterBooks.Controllers
         }
 
         // GET: Books/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -107,6 +112,7 @@ namespace BetterBooks.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             Book book = db.Books.Find(id);
