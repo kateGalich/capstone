@@ -16,7 +16,7 @@ namespace BetterBooks.Models
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int borrowerId { get; set; }
+        public string borrowerId { get; set; }
 
         [Key]
         [Column(Order = 2, TypeName = "date")]
@@ -27,6 +27,6 @@ namespace BetterBooks.Models
 
         public virtual Book Book { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

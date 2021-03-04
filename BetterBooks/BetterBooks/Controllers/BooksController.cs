@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BetterBooks.Models;
+using Microsoft.AspNet.Identity;
 
 namespace BetterBooks.Controllers
 {
@@ -17,7 +18,8 @@ namespace BetterBooks.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            return View(db.Books.ToList());
+            var userId = User.Identity.GetUserId();
+            return View(db.Books.Where(book => book.OwnerId == userId || userId == null).ToList());
         }
 
         // GET: Books/Details/5

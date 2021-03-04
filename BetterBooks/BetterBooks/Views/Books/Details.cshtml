@@ -43,8 +43,16 @@
         </dd>
 
     </dl>
+
+    <h5>Requested by</h5>
+    <ul>
+        @foreach (var user in Model.RequestedByUsers)
+        {
+            <li>@user.UserName</li>
+        }
+    </ul>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.BookId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

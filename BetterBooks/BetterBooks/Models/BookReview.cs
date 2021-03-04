@@ -6,24 +6,20 @@ namespace BetterBooks.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("BookReview")]
-    public partial class BookReview
-    {
-        [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int bookId { get; set; }
+    //[Table("BookReview")]
+    //public partial class BookReview
+    //{
+    //    [Key]
+    //    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    //    public int BookId { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int userId { get; set; }
+    //    [Key]
+    //    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    //    public string UserId { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
-        [StringLength(500)]
-        public string review { get; set; }
+    //    [StringLength(500)]
+    //    public string Review { get; set; }
 
-        public virtual User User { get; set; }
-    }
+    //    public virtual ApplicationUser User { get; set; }
+    //}
 }
