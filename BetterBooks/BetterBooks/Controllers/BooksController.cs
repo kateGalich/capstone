@@ -20,6 +20,7 @@ namespace BetterBooks.Controllers
         {
             var userId = User.Identity.GetUserId();
             return View(db.Books.Where(book => book.OwnerId == userId || userId == null).ToList());
+            // return View(db.Books.ToList());
         }
 
         // GET: Books/Details/5
@@ -50,10 +51,12 @@ namespace BetterBooks.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "BookId,Title,Author,Description,OwnerId")] Book book)
+        public ActionResult Create([Bind(Include = "Title,Author,Description")] Book book)
         {
             if (ModelState.IsValid)
             {
+                var userId = User.Identity.GetUserId();
+                book.OwnerId = userId;
                 db.Books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
