@@ -18,9 +18,7 @@ namespace BetterBooks.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            var userId = User.Identity.GetUserId();
-            return View(db.Books.Where(book => book.OwnerId == userId || userId == null).ToList());
-            // return View(db.Books.ToList());
+            return View(db.Books.ToList());
         }
 
         // GET: Books/Details/5
