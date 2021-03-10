@@ -13,11 +13,11 @@
     <br>
 
     <div class="btn-group" role="group">
-        <button type="button" class="btn btn-secondary">
-            Security
-        </button>
         <button type="button" class="btn btn-primary">
-            My books
+            Profile
+        </button>
+        <button type="button" class="btn btn-secondary">
+           @Html.ActionLink("My Books", "MyBooks")
         </button>
         <button type="button" class="btn btn-secondary">
             Requests to me
@@ -30,45 +30,6 @@
     <br>
 
 
-    <table class="table">
-
-        @foreach (var item in Model.MyBooks)
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink(item.Title, "Details", "Books", new { id = item.Id }, null)
-
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Author)
-                </td>
-                <td>
-                    @Html.CheckBox("Availability", true) Availability
-                </td>
-                <td>
-                    <div class="btn">
-                        <button type="button">
-                            @Html.ActionLink("Edit", "Edit", "Books", new { id = item.Id }, null)
-                        </button>
-                        <button type="button">
-                            @Html.ActionLink("Delete", "Delete", "Books", new { id = item.Id }, null)
-                        </button>
-                    </div>
-
-                   
-                </td>
-            </tr>
-        }
-    </table>
-    <div class="btn">
-        <button type="button">
-            @Html.ActionLink("Add new book", "Create", "Books")
-        </button>
-    </div>
-
-
-
-    <hr />
     <h4>Change your account settings</h4>
     <hr />
     <dl class="dl-horizontal">

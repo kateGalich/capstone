@@ -77,6 +77,30 @@ namespace BetterBooks.Controllers
             return View(model);
         }
 
+        // GET: /Manage/MyBooks
+        public async Task<ActionResult> MyBooks(ManageMessageId? message)
+        {
+            ViewBag.StatusMessage =
+                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
+                : message == ManageMessageId.Error ? "An error has occurred."
+                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
+                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : "";
+
+            var userId = User.Identity.GetUserId();
+            var model = new IndexViewModel
+            {
+                HasPassword = HasPassword(),
+                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
+                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
+                Logins = await UserManager.GetLoginsAsync(userId),
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                MyBooks = db.Books.Where(book => book.OwnerId == userId).ToList()
+            };
+            return View(model);
+        }
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
