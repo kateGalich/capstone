@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<BetterBooks.Models.Book>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Catalogue";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -17,14 +14,14 @@
         <th>
             @Html.DisplayNameFor(model => model.Author)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
 
         @if (User.Identity.IsAuthenticated)
         { 
         <th>
-            @Html.DisplayNameFor(model => model.OwnerId)
+            @Html.DisplayNameFor(model => model.Owner.UserName)
+        </th>
+        <th>
+            Request
         </th>
         }
         
@@ -40,24 +37,19 @@
         <td>
             @Html.DisplayFor(modelItem => item.Author)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
 
         @if (User.Identity.IsAuthenticated)
         {
         <td>
-            @Html.DisplayFor(modelItem => item.OwnerId)
+            @Html.DisplayFor(modelItem => item.Owner.UserName)
         </td>
-        //<td>
-        //    @Html.ActionLink("Request it","","")
-       // </td>
+        <td>
+            <button type="button">
+            @Html.ActionLink("Request it","","")
+            </button>
+        </td>
 
         }
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
     </tr>
 }
 
