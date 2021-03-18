@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<BetterBooks.Models.Book>
+@using Microsoft.AspNet.Identity;
 
 @{
     ViewBag.Title = "Catalogue";
@@ -16,41 +17,56 @@
         </th>
 
         @if (User.Identity.IsAuthenticated)
-        { 
-        <th>
-            @Html.DisplayNameFor(model => model.Owner.UserName)
-        </th>
-        <th>
-            Request
-        </th>
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.Owner.UserName)
+            </th>
+            <th>
+                Request
+            </th>
         }
-        
+
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Title,"Details", new {id=item.Id })
-          
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
+    @foreach (var book in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(book.Title, "Details", new { id = book.Id })
 
-        @if (User.Identity.IsAuthenticated)
-        {
-        <td>
-            @Html.DisplayFor(modelItem => item.Owner.UserName)
-        </td>
-        <td>
-            <button type="button">
-            @Html.ActionLink("Request it","","")
-            </button>
-        </td>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => book.Author)
+            </td>
 
-        }
-    </tr>
-}
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => book.Owner.UserName)
+                </td>
+
+                //POST: Books/RequestBook/5
+                <td>
+                    @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id }))
+                    {
+                        @Html.AntiForgeryToken()
+                        string userId = User.Identity.GetUserId();
+
+                        if (book.RequestedByUsers.Any(user => user.Id == userId))
+                        {
+                            <input type="submit" value="Cancel Request" class="btn btn-default" />
+                        }
+                        else
+                        {
+                            <input type="submit" value="Request it" class="btn btn-default" />
+                        }
+
+                    }
+                </td>
+
+            }
+        </tr>
+    }
 
 </table>

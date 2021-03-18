@@ -124,6 +124,27 @@ namespace BetterBooks.Controllers
             return RedirectToAction("Index");
         }
 
+        //POST: Books/RequestBook/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult RequestBook(int id)
+        {
+            Book book = db.Books.Find(id);
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            if (book.RequestedByUsers.Contains(user))
+            {
+                book.RequestedByUsers.Remove(user);
+            }
+            else
+            {
+                book.RequestedByUsers.Add(user);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
