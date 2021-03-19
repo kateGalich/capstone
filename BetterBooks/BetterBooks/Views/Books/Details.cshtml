@@ -1,4 +1,6 @@
 ﻿@model BetterBooks.Models.Book
+@using Microsoft.AspNet.Identity;
+
 
 @{
     ViewBag.Title = "Details";
@@ -37,12 +39,28 @@
         <dt>
             @Html.DisplayNameFor(model => model.OwnerId)
         </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OwnerId)
-        </dd>
-
     </dl>
+
+    @*POST: Books/RequestBook/5*@
+    <div>
+        @using (Html.BeginForm("RequestBook", "Books", new { id = Model.Id, returnAction="Details",returnId=Model.Id }))
+        {
+            @Html.AntiForgeryToken()
+            string userId = User.Identity.GetUserId();
+
+            if (Model.RequestedByUsers.Any(user => user.Id == userId))
+            {
+                <input type="submit" value="Cancel Request" class="btn btn-default" />
+            }
+            else
+            {
+                <input type="submit" value="Request it" class="btn btn-default" />
+            }
+
+        }
+    </div>
+
+
 
     <h5>Requested by</h5>
     <ul>

@@ -48,7 +48,7 @@
 
                 //POST: Books/RequestBook/5
                 <td>
-                    @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id }))
+                    @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction="Index" }))
                     {
                         @Html.AntiForgeryToken()
                         string userId = User.Identity.GetUserId();
