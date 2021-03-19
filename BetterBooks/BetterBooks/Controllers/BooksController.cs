@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -125,33 +124,33 @@ namespace BetterBooks.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        // Please Use this contrroller for review Action 
-        public ActionResult Review(int? id)
-        {
-            //BookReview bookReview = db.BookReviews.Find(id);
-            //dynamic myModel = new ExpandoObject();
-            //myModel.bookList = db.BookReviews.Where(p => p.BookId == id).ToList();
-            List<BookReview> bookList = db.BookReviews.Where(p => p.BookId == id).ToList();
-            ViewData["book"] = id;
-            ViewData["book1"] = db.BookReviews.Find(id);
-            return View(bookList);
-        }
-
+        //POST: Books/RequestBook/5
         [HttpPost]
-        public ActionResult Review([Bind(Include = "Review")] BookReview bookReview, int id)
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult RequestBook(int id, string returnAction, int? returnId = null)
         {
-            if (ModelState.IsValid)
+            Book book = db.Books.Find(id);
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            if (book.RequestedByUsers.Contains(user))
             {
-                var userId = User.Identity.GetUserId();
-                bookReview.UserId = userId;
-                bookReview.BookId = id;
-                db.BookReviews.Add(bookReview);
-                db.SaveChanges();
-                return RedirectToAction("Review");
+                book.RequestedByUsers.Remove(user);
             }
+            else
+            {
+                book.RequestedByUsers.Add(user);
+            }
+            db.SaveChanges();
 
-            return View();
+            if (returnId.HasValue)
+            {
+                return RedirectToAction(returnAction, new { id = returnId.Value });
+            }
+            else
+            {
+                return RedirectToAction(returnAction);
+            }
         }
 
         protected override void Dispose(bool disposing)

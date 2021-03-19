@@ -19,7 +19,7 @@ namespace BetterBooks.Models
         }
 
         public virtual DbSet<Book> Books { get; set; }
-        public virtual DbSet<BookReview> BookReviews { get; set; }
+        //public virtual DbSet<BookReview> BookReviews { get; set; }
         //public virtual DbSet<BorrowedBook> BorrowedBooks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
