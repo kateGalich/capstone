@@ -33,7 +33,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Better Books developers</p>
+            <p>&copy; @DateTime.Now.Year - @Html.ActionLink("Better Books Developers", "About", "Home")</p>
         </footer>
     </div>
 
