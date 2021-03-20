@@ -26,6 +26,7 @@ namespace BetterBooks.Models
         public string Author { get; set; }
 
         [StringLength(100)]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [ForeignKey("Owner")]
