@@ -85,7 +85,7 @@ namespace BetterBooks.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "BookId,Title,Author,Description,OwnerId")] Book book)
+        public ActionResult Edit([Bind(Include = "Id,Title,Author,Description,OwnerId")] Book book)
         {
             if (ModelState.IsValid)
             {
