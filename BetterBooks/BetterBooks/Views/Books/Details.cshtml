@@ -79,9 +79,10 @@
     </ul>
 </div>
 <p>
-    @if (User.Identity.GetUserId()==Model.OwnerId)
+    @if (User.Identity.GetUserId() == Model.OwnerId)
     {
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
     }
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink("View or Add Reviews", "Review", new { id = Model.Id })
 </p>

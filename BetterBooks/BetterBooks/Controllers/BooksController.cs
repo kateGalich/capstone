@@ -153,6 +153,41 @@ namespace BetterBooks.Controllers
             }
         }
 
+        [HttpGet]
+        // Please Use this contrroller for review Action 
+        public ActionResult Review(int? id)
+        {
+            //BookReview bookReview = db.BookReviews.Find(id);
+            //dynamic myModel = new ExpandoObject();
+            //myModel.bookList = db.BookReviews.Where(p => p.BookId == id).ToList();
+            List<BookReview> bookList = db.BookReviews.Where(p => p.BookId == id).ToList();
+            ViewData["book"] = id;
+            ViewData["book1"] = db.BookReviews.Find(id);
+
+            if (bookList != null)
+            {
+                return View(bookList);
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Review([Bind(Include = "Review")] BookReview bookReview, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                bookReview.UserId = userId;
+                bookReview.BookId = id;
+                db.BookReviews.Add(bookReview);
+                db.SaveChanges();
+                return RedirectToAction("Review");
+            }
+
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
