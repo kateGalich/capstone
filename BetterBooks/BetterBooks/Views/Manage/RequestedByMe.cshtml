@@ -1,11 +1,9 @@
-﻿@model BetterBooks.Models.MyBooksViewModel
+﻿@model BetterBooks.Models.RequestedByMeViewModel
 @using Microsoft.AspNet.Identity
 
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = "Requested by me";
 }
-
-
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
@@ -16,14 +14,14 @@
         <button type="button" class="btn btn-secondary">
             @Html.ActionLink("Profile", "Index")
         </button>
-        <button type="button" class="btn btn-primary">
-            My books
+        <button type="button" class="btn btn-secondary">
+            @Html.ActionLink("My Books", "MyBooks")
         </button>
         <button type="button" class="btn btn-secondary">
             Requests to me
         </button>
-        <button type="button" class="btn btn-secondary">
-            @Html.ActionLink("Requested by me", "RequestedByMe")
+        <button type="button" class="btn btn-primary">
+            Requested by me
         </button>
     </div>
     <br>
@@ -32,15 +30,15 @@
 
     <table class="table">
 
-        @foreach (var item in Model.MyBooks)
+        @foreach (var book in Model.BooksRequestedByMe)
         {
             <tr>
                 <td>
-                    @Html.ActionLink(item.Title, "Details", "Books", new { id = item.Id }, null)
+                    @Html.ActionLink(book.Title, "Details", "Books", new { id = book.Id }, null)
 
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Author)
+                    @Html.DisplayFor(x => book.Author)
                 </td>
                 <td>
                     @Html.CheckBox("AllowToBorrow", true) Allow to borrow
@@ -48,14 +46,14 @@
                 <td>
                     <div class="btn">
                         <button type="button">
-                            @Html.ActionLink("Edit", "Edit", "Books", new { id = item.Id }, null)
+                            @Html.ActionLink("Edit", "Edit", "Books", new { id = book.Id }, null)
                         </button>
                         <button type="button">
-                            @Html.ActionLink("Delete", "Delete", "Books", new { id = item.Id }, null)
+                            @Html.ActionLink("Delete", "Delete", "Books", new { id = book.Id }, null)
                         </button>
                     </div>
 
-                   
+
                 </td>
             </tr>
         }
@@ -65,5 +63,5 @@
             @Html.ActionLink("Add new book", "Create", "Books")
         </button>
     </div>
-          
+
 </div>

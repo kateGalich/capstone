@@ -12,8 +12,6 @@ namespace BetterBooks.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
-
-        public List<Book> MyBooks{ get; set; }
     }
 
     public class ManageLoginsViewModel

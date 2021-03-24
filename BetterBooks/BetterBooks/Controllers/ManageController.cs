@@ -33,9 +33,9 @@ namespace BetterBooks.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -72,35 +72,30 @@ namespace BetterBooks.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                MyBooks= db.Books.Where(book => book.OwnerId == userId).ToList()
             };
             return View(model);
         }
 
         // GET: /Manage/MyBooks
-        public async Task<ActionResult> MyBooks(ManageMessageId? message)
+        public ActionResult MyBooks()
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
-
-            var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
-            {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                MyBooks = db.Books.Where(book => book.OwnerId == userId).ToList()
-            };
+            string userId = User.Identity.GetUserId();
+            var model = new MyBooksViewModel();
+            model.MyBooks = db.Books.Where(book => book.OwnerId == userId).ToList();
             return View(model);
         }
+
+        // GET: /Manage/RequestedByMe
+        public ActionResult RequestedByMe()
+        {
+            string userId = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.Find(userId);
+            var model = new RequestedByMeViewModel();
+            model.BooksRequestedByMe = user.RequestedBooks.ToList();
+
+            return View(model);
+        }
+
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
@@ -359,7 +354,7 @@ namespace BetterBooks.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -410,6 +405,6 @@ namespace BetterBooks.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }
