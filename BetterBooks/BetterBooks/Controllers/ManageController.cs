@@ -95,6 +95,22 @@ namespace BetterBooks.Controllers
 
             return View(model);
         }
+        // GET: /Manage/RequestsToMe
+        public ActionResult RequestsToMe()
+        {
+            string userId = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.Find(userId);
+            var model = new RequestsToMeViewModel();
+            model.BooksRequestsToMe = user.RequestedBooks.ToList();
+
+            return View(model);
+        }
+
+        public ActionResult UserInfo(string userId)
+        {
+            ApplicationUser user = db.Users.Find(userId);
+            return PartialView("_UserInfo", user);
+        }
 
         //
         // POST: /Manage/RemoveLogin

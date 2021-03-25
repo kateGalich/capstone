@@ -18,7 +18,7 @@
             @Html.ActionLink("My Books", "MyBooks")
         </button>
         <button type="button" class="btn btn-secondary">
-            Requests to me
+            @Html.ActionLink("Requests to me", "RequestsToMe")
         </button>
         <button type="button" class="btn btn-primary">
             Requested by me
@@ -41,27 +41,55 @@
                     @Html.DisplayFor(x => book.Author)
                 </td>
                 <td>
-                    @Html.CheckBox("AllowToBorrow", true) Allow to borrow
+                    <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@book.Owner.UserName" data-toggle="popover" data-id="@book.OwnerId" data-trigger="focus">Contact info</a>
                 </td>
                 <td>
-                    <div class="btn">
-                        <button type="button">
-                            @Html.ActionLink("Edit", "Edit", "Books", new { id = book.Id }, null)
-                        </button>
-                        <button type="button">
-                            @Html.ActionLink("Delete", "Delete", "Books", new { id = book.Id }, null)
-                        </button>
-                    </div>
-
-
+                    @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "RequestedByMe", returnController = "Manage" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Cancel Request" class="btn btn-default" />
+                    }
                 </td>
+
+
             </tr>
         }
     </table>
+
+    <div id='contactCard' class='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='contactCardContent'></div>
+            </div>
+        </div>
+
+    </div>
     <div class="btn">
         <button type="button">
             @Html.ActionLink("Add new book", "Create", "Books")
         </button>
     </div>
+    @section scripts
+    {
+        <script>
+            $(function () {
+                $('[data-toggle="popover"]').popover();
+                $('.popover-user-info').on('show.bs.popover', function () {
+                    var popover = $(this);
+                    $.ajax({
+                        type: "GET",
+                        url: '/Manage/UserInfo',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "userId": popover.attr('data-id') },
+                        datatype: "json",
+                        success: function (data) {
+                            popover.data('bs.popover').tip().find('.popover-content').html(data);
+                        }
+                    });
+                });
+            });
+
+        </script>
+    }
 
 </div>

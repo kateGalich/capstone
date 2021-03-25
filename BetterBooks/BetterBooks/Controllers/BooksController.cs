@@ -128,7 +128,7 @@ namespace BetterBooks.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult RequestBook(int id, string returnAction, int? returnId = null)
+        public ActionResult RequestBook(int id, string returnAction, string returnController = null, int? returnId = null)
         {
             Book book = db.Books.Find(id);
             var userId = User.Identity.GetUserId();
@@ -145,11 +145,11 @@ namespace BetterBooks.Controllers
 
             if (returnId.HasValue)
             {
-                return RedirectToAction(returnAction, new { id = returnId.Value });
+                return RedirectToAction(returnAction, returnController, new { id = returnId.Value });
             }
             else
             {
-                return RedirectToAction(returnAction);
+                return RedirectToAction(returnAction, returnController);
             }
         }
 

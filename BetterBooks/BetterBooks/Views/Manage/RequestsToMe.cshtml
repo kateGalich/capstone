@@ -1,0 +1,54 @@
+﻿@model BetterBooks.Models.RequestsToMeViewModel
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Requests to me";
+}
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <div>@User.Identity.GetUserName()</div>
+    <br>
+
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-secondary">
+            @Html.ActionLink("Profile", "Index")
+        </button>
+        <button type="button" class="btn btn-secondary">
+            @Html.ActionLink("My Books", "MyBooks")
+        </button>
+        <button type="button" class="btn btn-primary">
+            Requests to me
+        </button>
+        <button type="button" class="btn btn-secondary">
+            @Html.ActionLink("Requested by me", "RequestedByMe")
+        </button>
+    </div>
+    <br>
+    <br>
+
+
+    <table class="table">
+
+        @foreach (var book in Model.BooksRequestsToMe)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(book.Title, "Details", "Books", new { id = book.Id }, null)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(x => book.Author)
+                </td>
+                
+                
+            </tr>
+        }
+    </table>
+    <div class="btn">
+        <button type="button">
+            @Html.ActionLink("Add new book", "Create", "Books")
+        </button>
+    </div>
+
+</div>
