@@ -4,6 +4,7 @@
 
 @{
     ViewBag.Title = "Details";
+    string userId = User.Identity.GetUserId();
 }
 
 <h2>Details</h2>
@@ -46,23 +47,25 @@
 
     @if (User.Identity.IsAuthenticated)
     {
-        <div>
-            @using (Html.BeginForm("RequestBook", "Books", new { id = Model.Id, returnAction = "Details", returnId = Model.Id }))
-            {
-                @Html.AntiForgeryToken()
-                string userId = User.Identity.GetUserId();
-
-                if (Model.RequestedByUsers.Any(user => user.Id == userId))
+        if (userId != Model.OwnerId)
+        {
+            <div>
+                @using (Html.BeginForm("RequestBook", "Books", new { id = Model.Id, returnAction = "Details", returnId = Model.Id }))
                 {
-                    <input type="submit" value="Cancel Request" class="btn btn-default" />
-                }
-                else
-                {
-                    <input type="submit" value="Request it" class="btn btn-default" />
-                }
+                    @Html.AntiForgeryToken()
 
-            }
-        </div>
+                    if (Model.RequestedByUsers.Any(user => user.Id == userId))
+                    {
+                        <input type="submit" value="Cancel Request" class="btn btn-default" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="Request it" class="btn btn-default" />
+                    }
+
+                }
+            </div>
+        }
     }
     else
     {
@@ -70,13 +73,7 @@
         <h5>Log in to request the book</h5>
     }
 
-    <h5>Requested by</h5>
-    <ul>
-        @foreach (var user in Model.RequestedByUsers)
-        {
-            <li>@user.UserName</li>
-        }
-    </ul>
+    
 </div>
 <p>
     @if (User.Identity.GetUserId() == Model.OwnerId)
