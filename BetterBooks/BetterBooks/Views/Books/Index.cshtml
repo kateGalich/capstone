@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "Catalogue";
+    var userId = User.Identity.GetUserId();
 }
 
 <h2>@ViewBag.Title</h2>
@@ -48,20 +49,22 @@
 
                 //POST: Books/RequestBook/5
                 <td>
-                    @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction="Index" }))
+                    @if (book.OwnerId!=userId)
                     {
-                        @Html.AntiForgeryToken()
-                        string userId = User.Identity.GetUserId();
-
-                        if (book.RequestedByUsers.Any(user => user.Id == userId))
+                        using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "Index" }))
                         {
-                            <input type="submit" value="Cancel Request" class="btn btn-default" />
-                        }
-                        else
-                        {
-                            <input type="submit" value="Request it" class="btn btn-default" />
-                        }
+                            @Html.AntiForgeryToken()
 
+                            if (book.RequestedByUsers.Any(user => user.Id == userId))
+                            {
+                                <input type="submit" value="Cancel Request" class="btn btn-default" />
+                            }
+                            else
+                            {
+                                <input type="submit" value="Request it" class="btn btn-default" />
+                            }
+
+                        }
                     }
                 </td>
 
