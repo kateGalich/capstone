@@ -40,15 +40,56 @@
                 <td>
                     @Html.DisplayFor(x => book.Author)
                 </td>
-                
-                
+
+                <td>
+                    @foreach (var requestor in book.RequestedByUsers)
+                    {
+                    <div>
+                        <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@requestor.UserName" data-toggle="popover" data-id="@requestor.Id" data-trigger="focus">@requestor.UserName</a>
+                        
+                        @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "RequestsToMe", returnController = "Manage" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Accept" class="btn btn-default" disabled="disabled"/>
+                        }
+
+                         @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "RequestsToMe", returnController = "Manage" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Reject" class="btn btn-default" disabled="disabled"/>
+                        }
+                    </div>
+                    }
+                </td>
+
+               
+
+
             </tr>
         }
     </table>
-    <div class="btn">
-        <button type="button">
-            @Html.ActionLink("Add new book", "Create", "Books")
-        </button>
-    </div>
+
+    @section scripts
+    {
+        <script>
+            $(function () {
+                $('[data-toggle="popover"]').popover();
+                $('.popover-user-info').on('show.bs.popover', function () {
+                    var popover = $(this);
+                    $.ajax({
+                        type: "GET",
+                        url: '/Manage/UserInfo',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "userId": popover.attr('data-id') },
+                        datatype: "json",
+                        success: function (data) {
+                            popover.data('bs.popover').tip().find('.popover-content').html(data);
+                        }
+                    });
+                });
+            });
+
+        </script>
+    }
 
 </div>

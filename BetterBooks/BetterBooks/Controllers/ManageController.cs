@@ -101,7 +101,9 @@ namespace BetterBooks.Controllers
             string userId = User.Identity.GetUserId();
             ApplicationUser user = db.Users.Find(userId);
             var model = new RequestsToMeViewModel();
-            model.BooksRequestsToMe = user.RequestedBooks.ToList();
+            model.BooksRequestsToMe = db.Books
+                .Where(book => book.OwnerId == userId && book.RequestedByUsers.Any())
+                .ToList();
 
             return View(model);
         }
