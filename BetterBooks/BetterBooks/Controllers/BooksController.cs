@@ -67,15 +67,25 @@ namespace BetterBooks.Controllers
         [Authorize]
         public ActionResult Edit(int? id)
         {
+            Book book = db.Books.Find(id);
+            var currentUser = User.Identity.GetUserId();
+            var userID = book.OwnerId;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
             if (book == null)
             {
                 return HttpNotFound();
             }
+            //This code stops them from anyone but the owner from editing the book - Ajay
+            if (currentUser!= userID)
+            {
+                Response.Write("<script>alert('Unathorized access! Returning to catalogue.');window.location.href='https://betterbooks20210320133241.azurewebsites.net/';</script>");
+                //return RedirectToAction("Details/" + id);
+            }
+
             return View(book);
         }
 
@@ -100,14 +110,23 @@ namespace BetterBooks.Controllers
         [Authorize]
         public ActionResult Delete(int? id)
         {
+            Book book = db.Books.Find(id);
+            var currentUser = User.Identity.GetUserId();
+            var userID = book.OwnerId;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
             if (book == null)
             {
                 return HttpNotFound();
+            }
+            //This code stops them from anyone but the owner from deleting the book - Ajay
+            if (currentUser != userID)
+            {
+                Response.Write("<script>alert('Unathorized access! Returning to catalogue.');window.location.href='https://betterbooks20210320133241.azurewebsites.net/';</script>");
+                //return RedirectToAction("Details/" + id);
             }
             return View(book);
         }
