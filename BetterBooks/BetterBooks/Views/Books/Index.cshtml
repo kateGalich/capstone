@@ -11,10 +11,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.ActionLink("Title", "Index", new { order = ViewBag.TitleSort})
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Author)
+            @Html.ActionLink("Author", "Index", new { order = ViewBag.AuthorSort})
         </th>
 
         @if (User.Identity.IsAuthenticated)
