@@ -16,9 +16,32 @@ namespace BetterBooks.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Books
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    return View(db.Books.ToList());
+        //}
+        
+        public ActionResult Index(string order)
         {
-            return View(db.Books.ToList());
+            var bookSort = from b in db.Books select b;
+            ViewData["TitleSort"] = string.IsNullOrEmpty(order) ? "title_desc" : "";
+            ViewData["AuthorSort"] = order == "Author"? "Author_desc": "Author";
+            switch (order)
+            {
+                case "title_desc":
+                    bookSort = bookSort.OrderByDescending(b => b.Title);
+                    break;
+                case "Author":
+                    bookSort = bookSort.OrderBy(b => b.Author);
+                    break;
+                case "Author_desc":
+                    bookSort = bookSort.OrderByDescending(b => b.Author);
+                    break;
+                default:
+                    bookSort = bookSort.OrderBy(b => b.Title);
+                    break;
+            }
+            return View(bookSort);
         }
 
         // GET: Books/Details/5
