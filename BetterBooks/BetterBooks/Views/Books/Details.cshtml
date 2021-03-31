@@ -54,7 +54,7 @@
                 {
                     @Html.AntiForgeryToken()
 
-                    if (Model.RequestedByUsers.Any(user => user.Id == userId))
+                    if (Model.RequestedByUsers.Any(request => request.UserId == userId))
                     {
                         <input type="submit" value="Cancel Request" class="btn btn-default" />
                     }
@@ -73,7 +73,7 @@
         <h5>Log in to request the book</h5>
     }
 
-    
+
 </div>
 <p>
     @if (User.Identity.GetUserId() == Model.OwnerId)

@@ -4,6 +4,6 @@ namespace BetterBooks.Models
 {
     public class RequestedByMeViewModel
     {
-        public List<Book> BooksRequestedByMe { get; set; }
+        public List<BookRequest> BooksRequestedByMe { get; set; }
     }
 }

@@ -16,16 +16,14 @@ namespace BetterBooks.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Books
-        //public ActionResult Index()
-        //{
-        //    return View(db.Books.ToList());
-        //}
-        
         public ActionResult Index(string order)
         {
-            var bookSort = from b in db.Books select b;
+            var bookSort = from b in db.Books
+                               .Include(book => book.Owner)
+                               .Include(book => book.RequestedByUsers)
+                           select b;
             ViewData["TitleSort"] = string.IsNullOrEmpty(order) ? "title_desc" : "";
-            ViewData["AuthorSort"] = order == "Author"? "Author_desc": "Author";
+            ViewData["AuthorSort"] = order == "Author" ? "Author_desc" : "Author";
             switch (order)
             {
                 case "title_desc":
@@ -103,7 +101,7 @@ namespace BetterBooks.Controllers
                 return HttpNotFound();
             }
             //This code stops them from anyone but the owner from editing the book - Ajay
-            if (currentUser!= userID)
+            if (currentUser != userID)
             {
                 Response.Write("<script>alert('Unathorized access! Returning to catalogue.');window.location.href='https://betterbooks20210320133241.azurewebsites.net/';</script>");
                 //return RedirectToAction("Details/" + id);
@@ -174,14 +172,17 @@ namespace BetterBooks.Controllers
         {
             Book book = db.Books.Find(id);
             var userId = User.Identity.GetUserId();
-            var user = db.Users.Find(userId);
-            if (book.RequestedByUsers.Contains(user))
+            var request = book.RequestedByUsers.FirstOrDefault(bookRequest => bookRequest.UserId == userId);
+            if (request != null)
             {
-                book.RequestedByUsers.Remove(user);
+                book.RequestedByUsers.Remove(request);
             }
             else
             {
-                book.RequestedByUsers.Add(user);
+                book.RequestedByUsers.Add(new BookRequest
+                {
+                    UserId = userId,
+                });
             }
             db.SaveChanges();
 

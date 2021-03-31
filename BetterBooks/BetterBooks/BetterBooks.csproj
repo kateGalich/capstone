@@ -191,6 +191,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\BookRequest.cs" />
     <Compile Include="Models\BookReview.cs" />
     <Compile Include="Models\BorrowedBook.cs" />
     <Compile Include="Models\ApplicationUser.cs" />

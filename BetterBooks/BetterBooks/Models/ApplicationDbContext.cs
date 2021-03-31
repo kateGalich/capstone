@@ -19,17 +19,13 @@ namespace BetterBooks.Models
         }
 
         public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<BookRequest> BookRequests { get; set; }
         public virtual DbSet<BookReview> BookReviews { get; set; }
         //public virtual DbSet<BorrowedBook> BorrowedBooks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Book>()
-                .HasMany(book => book.RequestedByUsers)
-                .WithMany(user => user.RequestedBooks)
-                .Map(m => m.ToTable("RequestedBooks").MapLeftKey("bookId").MapRightKey("userId"));
 
             //modelBuilder.Entity<Book>()
             //    .HasMany(e => e.Users)

@@ -60,16 +60,20 @@ namespace BetterBooks.Migrations
             cloe.Books.Add(lordOfTheRings);
 
             // make test book requests
-            anna.RequestedBooks.Add(hobbit);
-            cloe.RequestedBooks.Add(hobbit);
-            cloe.RequestedBooks.Add(blackCat);
-
             context.Users.AddOrUpdate(
                 u => u.UserName,
                 anna,
                 bob,
                 cloe
             );
+
+            //context.BookRequests.AddOrUpdate(
+            //    r => new { r.UserId, r.BookId },
+            //    new BookRequest(anna, hobbit),
+            //    new BookRequest(cloe, hobbit),
+            //    new BookRequest(cloe, blackCat)
+            //);
+
             context.SaveChanges();
         }
     }

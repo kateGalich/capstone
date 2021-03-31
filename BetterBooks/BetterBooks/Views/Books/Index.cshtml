@@ -11,10 +11,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Title", "Index", new { order = ViewBag.TitleSort})
+            @Html.ActionLink("Title", "Index", new { order = ViewBag.TitleSort })
         </th>
         <th>
-            @Html.ActionLink("Author", "Index", new { order = ViewBag.AuthorSort})
+            @Html.ActionLink("Author", "Index", new { order = ViewBag.AuthorSort })
         </th>
 
         @if (User.Identity.IsAuthenticated)
@@ -30,7 +30,7 @@
         <th></th>
     </tr>
 
-    @foreach (var book in Model)
+    @foreach (BetterBooks.Models.Book book in Model)
     {
         <tr>
             <td>
@@ -49,13 +49,13 @@
 
                 //POST: Books/RequestBook/5
                 <td>
-                    @if (book.OwnerId!=userId)
+                    @if (book.OwnerId != userId)
                     {
                         using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "Index" }))
                         {
                             @Html.AntiForgeryToken()
 
-                            if (book.RequestedByUsers.Any(user => user.Id == userId))
+                            if (book.RequestedByUsers.Any(request => request.UserId == userId))
                             {
                                 <input type="submit" value="Cancel Request" class="btn btn-default" />
                             }

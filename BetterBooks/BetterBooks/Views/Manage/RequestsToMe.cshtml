@@ -42,27 +42,27 @@
                 </td>
 
                 <td>
-                    @foreach (var requestor in book.RequestedByUsers)
+                    @foreach (var request in book.RequestedByUsers)
                     {
-                    <div>
-                        <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@requestor.UserName" data-toggle="popover" data-id="@requestor.Id" data-trigger="focus">@requestor.UserName</a>
-                        
-                        @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "RequestsToMe", returnController = "Manage" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input type="submit" value="Accept" class="btn btn-default" disabled="disabled"/>
-                        }
+                        <div>
+                            <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@request.User.UserName" data-toggle="popover" data-id="@request.User.Id" data-trigger="focus">@request.User.UserName</a>
 
-                         @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "RequestsToMe", returnController = "Manage" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input type="submit" value="Reject" class="btn btn-default" disabled="disabled"/>
-                        }
-                    </div>
+                            @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "RequestsToMe", returnController = "Manage" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="submit" value="Accept" class="btn btn-default" disabled="disabled" />
+                            }
+
+                            @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "RequestsToMe", returnController = "Manage" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="submit" value="Reject" class="btn btn-default" disabled="disabled" />
+                            }
+                        </div>
                     }
                 </td>
 
-               
+
 
 
             </tr>

@@ -19,7 +19,7 @@ namespace BetterBooks.Models
         //public virtual ICollection<BookReview> BookReviews { get; set; }
         //public virtual ICollection<BorrowedBook> BorrowedBooks { get; set; }
         public virtual ICollection<Book> Books { get; set; }
-        public virtual ICollection<Book> RequestedBooks { get; set; }
+        public virtual ICollection<BookRequest> RequestedBooks { get; set; }
         //public virtual ICollection<Book> GivingAwayBooks { get; set; }
 
         public ApplicationUser()
@@ -27,7 +27,7 @@ namespace BetterBooks.Models
             //BookReviews = new HashSet<BookReview>();
             //BorrowedBooks = new HashSet<BorrowedBook>();
             Books = new HashSet<Book>();
-            RequestedBooks = new HashSet<Book>();
+            RequestedBooks = new HashSet<BookRequest>();
             //BooksOfferedToMe = new HashSet<Book>();
             //GivingAwayBooks = new HashSet<Book>();
         }

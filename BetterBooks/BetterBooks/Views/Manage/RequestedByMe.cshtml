@@ -30,21 +30,21 @@
 
     <table class="table">
 
-        @foreach (var book in Model.BooksRequestedByMe)
+        @foreach (var bookRequest in Model.BooksRequestedByMe)
         {
             <tr>
                 <td>
-                    @Html.ActionLink(book.Title, "Details", "Books", new { id = book.Id }, null)
+                    @Html.ActionLink(bookRequest.Book.Title, "Details", "Books", new { id = bookRequest.Book.Id }, null)
 
                 </td>
                 <td>
-                    @Html.DisplayFor(x => book.Author)
+                    @Html.DisplayFor(x => bookRequest.Book.Author)
                 </td>
                 <td>
-                    <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@book.Owner.UserName" data-toggle="popover" data-id="@book.OwnerId" data-trigger="focus">Contact info</a>
+                    <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@bookRequest.Book.Owner.UserName" data-toggle="popover" data-id="@bookRequest.Book.OwnerId" data-trigger="focus">Contact info</a>
                 </td>
                 <td>
-                    @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "RequestedByMe", returnController = "Manage" }))
+                    @using (Html.BeginForm("RequestBook", "Books", new { id = bookRequest.Book.Id, returnAction = "RequestedByMe", returnController = "Manage" }))
                     {
                         @Html.AntiForgeryToken()
                         <input type="submit" value="Cancel Request" class="btn btn-default" />
