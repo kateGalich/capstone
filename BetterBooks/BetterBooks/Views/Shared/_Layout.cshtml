@@ -1,14 +1,46 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="zxx">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Better Books</title>
+
+
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
+
+    
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+
+
+    <style>              
+        tr {
+            background: #759c9f;
+            opacity:0.7;
+            color: #900C3F;
+            text-shadow:1px 1px black;
+        }
+        h2{
+            color: #b200ff;
+            text-shadow:2px 1px black;
+        }
+        
+        h3{
+            color:darkblue;          
+        }
+        tbody tr{
+            color:saddlebrown;
+        }
+    </style>
+
 </head>
+
+
 <body>
+    <header>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -29,6 +61,7 @@
             </div>
         </div>
     </div>
+    </header>
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -40,5 +73,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-</body>
-</html>
+
+    </body>
+    </html>
