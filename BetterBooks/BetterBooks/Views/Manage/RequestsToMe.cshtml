@@ -27,9 +27,7 @@
     <br>
     <br>
 
-
     <table class="table">
-
         @foreach (var book in Model.BooksRequestsToMe)
         {
             <tr>
@@ -42,21 +40,35 @@
                 </td>
 
                 <td>
-                    @foreach (var request in book.RequestedByUsers)
+                    @foreach (var bookRequest in book.RequestedByUsers)
                     {
                         <div>
-                            <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@request.User.UserName" data-toggle="popover" data-id="@request.User.Id" data-trigger="focus">@request.User.UserName</a>
+                            <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@bookRequest.User.UserName" data-toggle="popover" data-id="@bookRequest.User.Id" data-trigger="focus">@bookRequest.User.UserName</a>
 
-                            @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "RequestsToMe", returnController = "Manage" }))
+
+                            @using (Html.BeginForm("AcceptRequest", "Books", new
+                            {
+                                userId = bookRequest.UserId,
+                                bookId = bookRequest.BookId
+                            }))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="submit" value="Accept" class="btn btn-default" disabled="disabled" />
+                                <input type="submit" value="Accept" class="btn btn-default" />
                             }
 
-                            @using (Html.BeginForm("RequestBook", "Books", new { id = book.Id, returnAction = "RequestsToMe", returnController = "Manage" }))
+                            @using (Html.BeginForm("RejectRequest", "Books", new
+                            {
+                                userId = bookRequest.UserId,
+                                bookId = bookRequest.BookId
+                            }))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="submit" value="Reject" class="btn btn-default" disabled="disabled" />
+                                <input type="submit" value="Reject" class="btn btn-default" />
+                            }
+
+                            @if (bookRequest.Status != null)
+                            {
+                                <p>Current Status: @bookRequest.Status</p>
                             }
                         </div>
                     }

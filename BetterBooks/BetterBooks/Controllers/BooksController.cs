@@ -231,6 +231,37 @@ namespace BetterBooks.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult AcceptRequest(string userId, int bookId)
+        {
+            BookRequest request = db.BookRequests.Find(userId, bookId);
+            if (request != null)
+            {
+                request.Status = "accepted";
+            }
+            db.SaveChanges();
+
+            return RedirectToAction("RequestsToMe", "Manage");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult RejectRequest(string userId, int bookId)
+        {
+            BookRequest request = db.BookRequests.Find(userId, bookId);
+            if (request != null)
+            {
+                request.Status = "rejected";
+            }
+            db.SaveChanges();
+
+            return RedirectToAction("RequestsToMe", "Manage");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
