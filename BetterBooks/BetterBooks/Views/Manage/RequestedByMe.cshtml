@@ -41,7 +41,14 @@
                     @Html.DisplayFor(x => bookRequest.Book.Author)
                 </td>
                 <td>
-                    <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@bookRequest.Book.Owner.UserName" data-toggle="popover" data-id="@bookRequest.Book.OwnerId" data-trigger="focus">Contact info</a>
+                    @if (bookRequest.Status == "accepted")
+                    {
+                        <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@bookRequest.Book.Owner.UserName" data-toggle="popover" data-id="@bookRequest.Book.OwnerId" data-trigger="focus">Contact info</a>
+                    }
+                    else
+                    {
+                        <p style="color: gray" title="Contact info will be shown when request is approved.">Contact info</p>
+                    }
                 </td>
                 <td>
                     @using (Html.BeginForm("RequestBook", "Books", new { id = bookRequest.Book.Id, returnAction = "RequestedByMe", returnController = "Manage" }))
