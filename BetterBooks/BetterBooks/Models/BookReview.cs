@@ -17,13 +17,13 @@ namespace BetterBooks.Models
         [ForeignKey("Book")]
         public int BookId { get; set; }
 
-        [ForeignKey("User")]
-        public string UserId { get; set; }
+       // [ForeignKey("User")]
+       // public string UserId { get; set; }
 
         [StringLength(500)]
         public string Review { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+       // public virtual ApplicationUser User { get; set; }
         public virtual Book Book { get; set; }
     }
 }
