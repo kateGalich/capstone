@@ -70,7 +70,7 @@ namespace BetterBooks.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "Title,Author,Description")] Book book)
+        public ActionResult Create([Bind(Include = "Title,Author,Year,Description")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -116,7 +116,7 @@ namespace BetterBooks.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,Title,Author,Description,OwnerId")] Book book)
+        public ActionResult Edit([Bind(Include = "Id,Title,Author,Year,Description,OwnerId")] Book book)
         {
             if (ModelState.IsValid)
             {

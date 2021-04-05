@@ -33,6 +33,8 @@ namespace BetterBooks.Models
         public string OwnerId { get; set; }
         public virtual ApplicationUser Owner { get; set; }
 
+        public int? Year { get; set; }
+
         public virtual ICollection<BookRequest> RequestedByUsers { get; set; }
         //public virtual ICollection<ApplicationUser> OfferedToUsers { get; set; }
         //public virtual ICollection<ApplicationUser> GivenAwayByUsers { get; set; }

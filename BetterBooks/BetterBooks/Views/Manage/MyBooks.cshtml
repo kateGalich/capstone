@@ -43,6 +43,9 @@
                     @Html.DisplayFor(modelItem => item.Author)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
                     @Html.CheckBox("AllowToBorrow", true) Allow to borrow
                 </td>
                 <td>
@@ -55,7 +58,7 @@
                         </button>
                     </div>
 
-                   
+
                 </td>
             </tr>
         }
@@ -65,5 +68,5 @@
             @Html.ActionLink("Add new book", "Create", "Books")
         </button>
     </div>
-          
+
 </div>
