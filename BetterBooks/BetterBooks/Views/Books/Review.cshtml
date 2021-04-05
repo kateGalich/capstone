@@ -4,26 +4,27 @@
     ViewBag.Title = "Review";
 }
 
-<body style="background-image: url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80'); height: 900px; background-size: cover; background-repeat: no-repeat; background-position-x: center; background-position-y: center;">
-<h2  style="font-size: 4em; color:#9d2323;">Review</h2>
+<h2>Review</h2>
 
-@*@{
-    BetterBooks.Models.BookReview book = new BetterBooks.Models.BookReview();
-}*@
+@{
+    BetterBooks.Models.BookReview book = ViewData["book1"] as BetterBooks.Models.BookReview;
+}
 
 
-<table class="table" style="background-color:lightgray;">
+<table class="table">
     <tr>
-        <th style="color:blue; text-shadow: 0px 0px; font-size:1.5em;">
+        <th>
             @Html.DisplayNameFor(model => model.Review)
         </th>
+
+        <th></th>
     </tr>
 
     
     @foreach (var item in Model)
     {
-        <tr >
-            <td style="color:black; text-shadow: 0px 0px;">
+        <tr>
+            <td>
                 @Html.DisplayFor(modelItem => item.Review)
             </td>
         </tr>
@@ -32,17 +33,13 @@
 
 </table>
 
-@*<div class="row">
+<div class="row">
     <div class="col-md-4">
         <form asp-action="Review" asp-route-id="@ViewData["book"]" method="post">
-            @Html.AntiForgeryToken()
-
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="@book.Review" class="control-label"></label>
-                @Html.Label("Review")
                 <input asp-for="@book.Review" class="form-control" />
-                @Html.Editor("Review")
             </div>
 
             <div class="form-group">
@@ -50,12 +47,6 @@
             </div>
         </form>
     </div>
-</div>*@
-
-<div>
-    <p>
-        @Html.ActionLink("Create New", "CreateReview", new { id = ViewData["book"] })
-    </p>
 </div>
 
 <div>
@@ -65,6 +56,3 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-
-</body>

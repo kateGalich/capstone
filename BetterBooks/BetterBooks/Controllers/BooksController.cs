@@ -218,15 +218,12 @@ namespace BetterBooks.Controllers
         [HttpPost]
         public ActionResult Review([Bind(Include = "Review")] BookReview bookReview, int id)
         {
-
             if (ModelState.IsValid)
             {
-                //var userId = User.Identity.GetUserId();
-                //bookReview.UserId = userId;
+                var userId = User.Identity.GetUserId();
+                bookReview.UserId = userId;
                 bookReview.BookId = id;
-                var rw = bookReview.Review;
                 db.BookReviews.Add(bookReview);
-
                 db.SaveChanges();
                 return RedirectToAction("Review");
             }
@@ -234,23 +231,35 @@ namespace BetterBooks.Controllers
             return View();
         }
 
-        public ActionResult CreateReview(int? id)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult AcceptRequest(string userId, int bookId)
         {
-            ViewData["BookId"] = id;
-            return View();
+            BookRequest request = db.BookRequests.Find(userId, bookId);
+            if (request != null)
+            {
+                request.Status = "accepted";
+            }
+            db.SaveChanges();
+
+            return RedirectToAction("RequestsToMe", "Manage");
         }
 
         [HttpPost]
-        public ActionResult CreateReview ([Bind(Include = "Review")] BookReview bookReview, int id)
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult RejectRequest(string userId, int bookId)
         {
-            if (ModelState.IsValid)
+            BookRequest request = db.BookRequests.Find(userId, bookId);
+            if (request != null)
             {
-                bookReview.BookId = id;
-                db.BookReviews.Add(bookReview);
-                db.SaveChanges();
-                return RedirectToAction("Review", new { id=id });
+                request.Status = "rejected";
             }
-            return View();
+            db.SaveChanges();
+
+            return RedirectToAction("RequestsToMe", "Manage");
         }
 
         protected override void Dispose(bool disposing)

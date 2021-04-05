@@ -6,32 +6,42 @@
     ViewBag.Title = "Details";
     string userId = User.Identity.GetUserId();
 }
-<body style="background-image: url('https://images.unsplash.com/photo-1519682337058-a94d519337bc?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'); height: 900px; background-size:cover; background-repeat: no-repeat;   background-position-x:center;background-position-y:center;">
-    
-    <h2>Details About The Book</h2>
 
-    <div>
-        <h3>Book Information!</h3>
-        <hr/>
-       
-    <table class="table table-bordered">
-        <tr>
-            <td>@Html.DisplayNameFor(model => model.Title)</td>
-            <td>@Html.DisplayFor(model => model.Title)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => model.Author)</td>
-            <td>@Html.DisplayFor(model => model.Author)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => model.Description)</td>
-            <td> @Html.DisplayFor(model => model.Description)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => model.OwnerId)</td>
-            <td></td>
-        </tr>
-    </table>
+<h2>Details</h2>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OwnerId)
+        </dt>
+    </dl>
+
 
     @*POST: Books/RequestBook/5*@
 
@@ -60,18 +70,16 @@
     else
     {
         <br>
-        <h5>Log in with user ID to request the book!</h5>
+        <h5>Log in to request the book</h5>
     }
 
 
-    </div>
-    <p>
-        @if (User.Identity.GetUserId() == Model.OwnerId)
-        {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
-        }
-        @Html.ActionLink("Back to List", "Index") |
-        @Html.ActionLink("View or Add Reviews", "Review", new { id = Model.Id })
-    </p>
-
-</body>
+</div>
+<p>
+    @if (User.Identity.GetUserId() == Model.OwnerId)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+    }
+    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink("View or Add Reviews", "Review", new { id = Model.Id })
+</p>

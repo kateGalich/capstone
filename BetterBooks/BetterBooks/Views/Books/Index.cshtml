@@ -6,16 +6,14 @@
     var userId = User.Identity.GetUserId();
 }
 
-<body style="background-image: url('https://images.unsplash.com/photo-1523868157789-c313eb2f1ee9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80'); height: 900px; background-size: cover; background-repeat: no-repeat; background-position-x: center; background-position-y: center; ">
+<h2>@ViewBag.Title</h2>
 
-<h2 class="text-center" style="color:#ca8ee6; text-shadow: 2px 2px blue;">@ViewBag.Title</h2>
-
-<table class="table" style="background-color: lightblue;">
-    <tr style="background-color: lightyellow; color: red;">
+<table class="table">
+    <tr>
         <th>
             @Html.ActionLink("Title", "Index", new { order = ViewBag.TitleSort })
         </th>
-        <th >
+        <th>
             @Html.ActionLink("Author", "Index", new { order = ViewBag.AuthorSort })
         </th>
 
@@ -29,12 +27,12 @@
             </th>
         }
 
-       
+        <th></th>
     </tr>
 
     @foreach (BetterBooks.Models.Book book in Model)
     {
-        <tr  style="background-color: lightyellow; color:red;">
+        <tr>
             <td>
                 @Html.ActionLink(book.Title, "Details", new { id = book.Id })
 
@@ -75,4 +73,3 @@
     }
 
 </table>
-    </body>
