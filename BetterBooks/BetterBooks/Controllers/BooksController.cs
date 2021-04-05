@@ -76,6 +76,7 @@ namespace BetterBooks.Controllers
             {
                 var userId = User.Identity.GetUserId();
                 book.OwnerId = userId;
+                book.DateAdded = DateTime.Now;
                 db.Books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -116,7 +117,7 @@ namespace BetterBooks.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,Title,Author,Year,Description,OwnerId")] Book book)
+        public ActionResult Edit([Bind(Include = "Id,Title,Author,Year,Description,OwnerId, DateAdded")] Book book)
         {
             if (ModelState.IsValid)
             {

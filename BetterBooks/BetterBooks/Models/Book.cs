@@ -19,7 +19,7 @@ namespace BetterBooks.Models
 
         [Required]
         [StringLength(50)]
-        public string Title {get; set;}
+        public string Title { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -34,6 +34,9 @@ namespace BetterBooks.Models
         public virtual ApplicationUser Owner { get; set; }
 
         public int? Year { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:d}")]
+        public DateTime DateAdded { get; set; }
 
         public virtual ICollection<BookRequest> RequestedByUsers { get; set; }
         //public virtual ICollection<ApplicationUser> OfferedToUsers { get; set; }

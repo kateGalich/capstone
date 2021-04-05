@@ -19,6 +19,9 @@
         <th>
             @Html.ActionLink("Year", "Index")
         </th>
+        <th>
+            @Html.ActionLink("Date Added", "Index")
+        </th>
 
         @if (User.Identity.IsAuthenticated)
         {
@@ -46,6 +49,9 @@
 
             <td>
                 @Html.DisplayFor(modelItem => book.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => book.DateAdded)
             </td>
 
             @if (User.Identity.IsAuthenticated)

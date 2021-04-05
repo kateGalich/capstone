@@ -46,11 +46,11 @@ namespace BetterBooks.Migrations
             };
 
             // create sample books
-            Book blackCat = new Book { Author = "Edgar Allan Poe", Title = "The Black Cat", Year=2000 };
-            Book goldBug = new Book { Author = "Edgar Allan Poe", Title = "The Gold-Bug", Year=2010 };
-            Book hopFrog = new Book { Author = "Edgar Allan Poe", Title = "Hop-Frog", Year = 2019 };
-            Book hobbit = new Book { Author = "J.R.R. Tolkien", Title = "The Hobbit", Year = 1959 };
-            Book lordOfTheRings = new Book { Author = "J.R.R. Tolkien", Title = "The Lord of the Rings", Year = 1965 };
+            Book blackCat = new Book { Author = "Edgar Allan Poe", Title = "The Black Cat", Year = 2000, DateAdded=new DateTime(2020, 01,30) };
+            Book goldBug = new Book { Author = "Edgar Allan Poe", Title = "The Gold-Bug", Year = 2010, DateAdded = new DateTime(2021, 03, 30) };
+            Book hopFrog = new Book { Author = "Edgar Allan Poe", Title = "Hop-Frog", Year = 2019, DateAdded = new DateTime(2019, 12, 16) };
+            Book hobbit = new Book { Author = "J.R.R. Tolkien", Title = "The Hobbit", Year = 1959, DateAdded = new DateTime(2005, 05, 10) };
+            Book lordOfTheRings = new Book { Author = "J.R.R. Tolkien", Title = "The Lord of the Rings", Year = 1965, DateAdded = new DateTime(2021, 04, 05) };
 
             // add books to users
             anna.Books.Add(blackCat);
