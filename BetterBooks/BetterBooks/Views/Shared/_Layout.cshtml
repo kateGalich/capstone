@@ -1,4 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using BetterBooks.Models
+@using Microsoft.AspNet.Identity
+@{
+    if (Request.IsAuthenticated)
+    {
+        var db = new ApplicationDbContext();
+        string userId = User.Identity.GetUserId();
+        ViewData["RequestsCount"] =
+            db.Books
+                .Where(book =>
+                    book.OwnerId == userId &&
+                    book.RequestedByUsers.Where(request => request.Status == null).Any())
+                .Count();
+    }
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -22,6 +37,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Catalogue", "Index", "Books")</li>
+                    <li>
+                        <a href="/Manage/RequestsToMe">Requests to me <span class="badge badge-info">@ViewData["RequestsCount"]</span></a>
+                    </li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
