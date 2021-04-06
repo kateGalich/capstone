@@ -42,6 +42,25 @@ namespace BetterBooks.Controllers
             return View(bookSort);
         }
 
+        // GET: Books/Image/5
+        public ActionResult Image(int id)
+        {
+            Book book = db.Books.Find(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (book.Image != null)
+            {
+                return File(book.Image, "image");
+            }
+            else
+            {
+                return File("~/Content/default_cover.jpg", "image");
+            }
+        }
+
         // GET: Books/Details/5
         public ActionResult Details(int? id)
         {
@@ -117,10 +136,21 @@ namespace BetterBooks.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,Title,Author,Year,Description,OwnerId, DateAdded")] Book book)
+        public ActionResult Edit([Bind(Include = "Id,Title,Author,Year,Description,OwnerId,DateAdded,NewImage")] Book book)
         {
             if (ModelState.IsValid)
             {
+                if (book.NewImage != null)
+                {
+                    var bytes = new byte[book.NewImage.ContentLength];
+                    book.NewImage.InputStream.Read(bytes, 0, bytes.Length);
+                    book.Image = bytes;
+                }
+                else
+                {
+                    book.Image = db.Books.Where(b => b.Id == book.Id).Select(b => b.Image).FirstOrDefault();
+                }
+
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

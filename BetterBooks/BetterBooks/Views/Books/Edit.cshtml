@@ -7,7 +7,7 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -18,6 +18,17 @@
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.OwnerId)
         @Html.HiddenFor(model => model.DateAdded)
+
+        <div class="form-group">
+            @if (Model.Image == null)
+            {
+                <img width="160" height="160" src="~/Content/default_cover.jpg" />
+            }
+            else
+            {
+                <img width="160" height="160" src="/Books/Image/@Model.Id" />
+            }
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -49,6 +60,12 @@
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.NewImage)
+            @Html.TextBoxFor(x => x.NewImage, new { type = "file" })
+            @Html.ValidationMessageFor(x => x.NewImage)
         </div>
 
         <div class="form-group">

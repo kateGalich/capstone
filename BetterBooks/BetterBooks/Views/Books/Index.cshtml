@@ -11,6 +11,10 @@
 <table class="table">
     <tr>
         <th>
+
+
+        </th>
+        <th>
             @Html.ActionLink("Title", "Index", new { order = ViewBag.TitleSort })
         </th>
         <th>
@@ -39,6 +43,16 @@
     @foreach (BetterBooks.Models.Book book in Model)
     {
         <tr>
+            <td>
+                @if (book.Image == null)
+                {
+                    <img width="92" height="92" src="~/Content/default_cover.jpg" />
+                }
+                else
+                {
+                    <img width="92" height="92" src="/Books/Image/@book.Id" />
+                }
+            </td>
             <td>
                 @Html.ActionLink(book.Title, "Details", new { id = book.Id })
             </td>

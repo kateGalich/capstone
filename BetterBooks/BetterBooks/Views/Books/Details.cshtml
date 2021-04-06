@@ -12,7 +12,18 @@
 <div>
     <h4>Book</h4>
     <hr />
+
+    @if (Model.Image == null)
+    {
+        <img width="160" height="160" src="~/Content/default_cover.jpg" />
+    }
+    else
+    {
+        <img width="160" height="160" src="/Books/Image/@Model.Id" />
+    }
+
     <dl class="dl-horizontal">
+
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>

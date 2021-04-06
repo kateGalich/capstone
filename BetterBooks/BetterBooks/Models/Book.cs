@@ -5,6 +5,7 @@ namespace BetterBooks.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web;
 
     public partial class Book
     {
@@ -37,6 +38,11 @@ namespace BetterBooks.Models
 
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime DateAdded { get; set; }
+
+        public byte[] Image { get; set; }
+
+        [NotMapped]
+        public HttpPostedFileBase NewImage { get; set; }
 
         public virtual ICollection<BookRequest> RequestedByUsers { get; set; }
         //public virtual ICollection<ApplicationUser> OfferedToUsers { get; set; }
