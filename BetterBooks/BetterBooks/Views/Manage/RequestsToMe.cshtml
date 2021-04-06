@@ -7,27 +7,16 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <div>@User.Identity.GetUserName()</div>
-    <br>
 
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-secondary">
-            @Html.ActionLink("Profile", "Index")
-        </button>
-        <button type="button" class="btn btn-secondary">
-            @Html.ActionLink("My Books", "MyBooks")
-        </button>
-        <button type="button" class="btn btn-primary">
-            Requests to me
-        </button>
-        <button type="button" class="btn btn-secondary">
-            @Html.ActionLink("Requested by me", "RequestedByMe")
-        </button>
-    </div>
-    <br>
-    <br>
+    <h1>Requests to me</h1>
 
     <table class="table">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Year</th>
+            <th>Status</th>
+        </tr>
         @foreach (var book in Model.BooksRequestsToMe)
         {
             <tr>
@@ -54,7 +43,7 @@
                             {
                                 userId = bookRequest.UserId,
                                 bookId = bookRequest.BookId
-                            }))
+                            }, FormMethod.Post, new { style = "display:inline-block" }))
                             {
                                 @Html.AntiForgeryToken()
                                 <input type="submit" value="Accept" class="btn btn-default" />
@@ -64,7 +53,7 @@
                             {
                                 userId = bookRequest.UserId,
                                 bookId = bookRequest.BookId
-                            }))
+                            }, FormMethod.Post, new { style = "display:inline-block" }))
                             {
                                 @Html.AntiForgeryToken()
                                 <input type="submit" value="Reject" class="btn btn-default" />

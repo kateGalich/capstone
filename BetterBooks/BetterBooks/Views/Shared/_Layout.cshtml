@@ -37,10 +37,15 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Catalogue", "Index", "Books")</li>
+
+                    <li> @Html.ActionLink("My Books", "MyBooks", "Manage")</li>
+
                     <li>
                         <a href="/Manage/RequestsToMe">Requests to me <span class="badge badge-info">@ViewData["RequestsCount"]</span></a>
                     </li>
-                   
+
+                    <li> @Html.ActionLink("Requested by me", "RequestedByMe", "Manage")</li>
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

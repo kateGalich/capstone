@@ -5,28 +5,9 @@
     ViewBag.Title = "Manage";
 }
 
-
-
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <div>@User.Identity.GetUserName()</div>
-    <br>
-
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-primary">
-            Profile
-        </button>
-        <button type="button" class="btn btn-secondary">
-           @Html.ActionLink("My Books", "MyBooks")
-        </button>
-        <button type="button" class="btn btn-secondary">
-            @Html.ActionLink("Requests to me", "RequestsToMe")
-        </button>
-        <button type="button" class="btn btn-secondary">
-            @Html.ActionLink("Requested by me", "RequestedByMe")
-        </button>
-    </div>
-    <br>
+    <div>Hello @User.Identity.GetUserName()</div>
     <br>
 
 
