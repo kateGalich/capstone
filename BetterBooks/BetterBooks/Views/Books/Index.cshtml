@@ -8,6 +8,15 @@
 
 <h2>@ViewBag.Title</h2>
 
+     @using (Html.BeginForm())
+{
+<h5>Find by Title: </h5>
+    <p>
+        @Html.TextBox("searchOrder")
+        <input type="submit" value="Search" />
+    </p>
+}
+     
 <table class="table">
     <tr>
         <th>
