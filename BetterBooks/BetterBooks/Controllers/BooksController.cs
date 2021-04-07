@@ -16,7 +16,7 @@ namespace BetterBooks.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Books
-        public ActionResult Index(string order)
+        public ActionResult Index(string order, string searchOrder)
         {
             var bookSort = from b in db.Books
                                .Include(book => book.Owner)
@@ -24,6 +24,10 @@ namespace BetterBooks.Controllers
                            select b;
             ViewData["TitleSort"] = string.IsNullOrEmpty(order) ? "title_desc" : "";
             ViewData["AuthorSort"] = order == "Author" ? "Author_desc" : "Author";
+            if (!String.IsNullOrEmpty(searchOrder))
+            {
+                bookSort = bookSort.Where(s => s.Title.Contains(searchOrder));
+            }
             switch (order)
             {
                 case "title_desc":
