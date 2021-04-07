@@ -15,10 +15,10 @@
 
         </th>
         <th>
-            @Html.ActionLink("Title", "Index", new { order = ViewBag.TitleSort })
+            <span class="glyphicon glyphicon-sort">@Html.ActionLink("Title", "Index", new { order = ViewBag.TitleSort })</span>
         </th>
         <th>
-            @Html.ActionLink("Author", "Index", new { order = ViewBag.AuthorSort })
+            <span class="glyphicon glyphicon-sort">@Html.ActionLink("Author", "Index", new { order = ViewBag.AuthorSort })</span>
         </th>
         <th>
             @Html.ActionLink("Year", "Index")
