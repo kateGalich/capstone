@@ -24,6 +24,7 @@ namespace BetterBooks.Controllers
                            select b;
             ViewData["TitleSort"] = string.IsNullOrEmpty(order) ? "title_desc" : "";
             ViewData["AuthorSort"] = order == "Author" ? "Author_desc" : "Author";
+            ViewData["DateSort"] = order == "DateAsc" ? "DateDesc" : "DateAsc";
             if (!String.IsNullOrEmpty(searchOrder))
             {
                 bookSort = bookSort.Where(s => s.Title.Contains(searchOrder));
@@ -38,6 +39,12 @@ namespace BetterBooks.Controllers
                     break;
                 case "Author_desc":
                     bookSort = bookSort.OrderByDescending(b => b.Author);
+                    break;
+                case "DateAsc":
+                    bookSort = bookSort.OrderBy(b => b.DateAdded);
+                    break;
+                case "DateDesc":
+                    bookSort = bookSort.OrderByDescending(b => b.DateAdded);
                     break;
                 default:
                     bookSort = bookSort.OrderBy(b => b.Title);
