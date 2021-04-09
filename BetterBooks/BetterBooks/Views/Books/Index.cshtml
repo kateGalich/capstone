@@ -1,11 +1,12 @@
-﻿@model IEnumerable<BetterBooks.Models.Book>
+@model IEnumerable<BetterBooks.Models.Book>
 @using Microsoft.AspNet.Identity;
 
 @{
     ViewBag.Title = "Catalogue";
     var userId = User.Identity.GetUserId();
-}
 
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <h2>@ViewBag.Title</h2>
 
      @using (Html.BeginForm())
@@ -13,9 +14,11 @@
 <h5>Find by Title: </h5>
     <p>
         @Html.TextBox("searchOrder")
-        <input type="submit" value="Search" />
+        <input type="submit" value="Search" class="btn btn-primary" />
     </p>
 }
+
+@Html.ActionLink("Add new book", "Create", "Books", new { @class = "btn btn-primary" })
      
 <table class="table">
     <tr>
@@ -24,16 +27,17 @@
 
         </th>
         <th>
-            <span class="glyphicon glyphicon-sort">@Html.ActionLink("Title", "Index", new { order = ViewBag.TitleSort })</span>
+            <i class="fa fa-sort">@Html.ActionLink("Title", "Index", new { order = ViewBag.TitleSort })</i>
         </th>
         <th>
-            <span class="glyphicon glyphicon-sort">@Html.ActionLink("Author", "Index", new { order = ViewBag.AuthorSort })</span>
+
+            <i class="fa fa-sort">@Html.ActionLink("Author", "Index", new { order = ViewBag.AuthorSort })</i>
         </th>
         <th>
             @Html.ActionLink("Year", "Index")
         </th>
         <th>
-            @Html.ActionLink("Date Added", "Index")
+            <i class="fa fa-sort">@Html.ActionLink("Date Added", "Index", new { order = ViewBag.DateSort })</i>
         </th>
 
         @if (User.Identity.IsAuthenticated)
@@ -93,11 +97,11 @@
 
                             if (book.RequestedByUsers.Any(request => request.UserId == userId))
                             {
-                                <input type="submit" value="Cancel Request" class="btn btn-default" />
+                                <input type="submit" value="Cancel Request" class="btn btn-info" />
                             }
                             else
                             {
-                                <input type="submit" value="Request it" class="btn btn-default" />
+                                <input type="submit" value="Request it" class="btn btn-primary" />
                             }
 
                         }
