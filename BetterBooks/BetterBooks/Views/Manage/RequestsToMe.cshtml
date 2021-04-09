@@ -46,7 +46,7 @@
                             }, FormMethod.Post, new { style = "display:inline-block" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="submit" value="Accept" class="btn btn-default" />
+                                <input type="submit" value="Accept" class="btn btn-primary" />
                             }
 
                             @using (Html.BeginForm("RejectRequest", "Books", new
@@ -56,7 +56,7 @@
                             }, FormMethod.Post, new { style = "display:inline-block" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="submit" value="Reject" class="btn btn-default" />
+                                <input type="submit" value="Reject" class="btn btn-secondary" />
                             }
 
                             @if (bookRequest.Status != null)
