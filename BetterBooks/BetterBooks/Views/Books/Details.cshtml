@@ -75,11 +75,11 @@
 
                     if (Model.RequestedByUsers.Any(request => request.UserId == userId))
                     {
-                        <input type="submit" value="Cancel Request" class="btn btn-default" />
+                        <input type="submit" value="Cancel Request" class="btn btn-info" />
                     }
                     else
                     {
-                        <input type="submit" value="Request it" class="btn btn-default" />
+                        <input type="submit" value="Request it" class="btn btn-primary" />
                     }
 
                 }
@@ -99,6 +99,12 @@
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
     }
+    |
+    @if (User.Identity.GetUserId() == Model.OwnerId)
+    { 
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+    }
+    |
     @Html.ActionLink("Back to List", "Index") |
     @Html.ActionLink("View or Add Reviews", "Review", new { id = Model.Id })
 </p>
