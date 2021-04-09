@@ -45,7 +45,7 @@
                     @using (Html.BeginForm("RequestBook", "Books", new { id = bookRequest.Book.Id, returnAction = "RequestedByMe", returnController = "Manage" }))
                     {
                         @Html.AntiForgeryToken()
-                        <input type="submit" value="Cancel Request" class="btn btn-default" />
+                        <input type="submit" value="Cancel Request" class="btn btn-secondary" />
                     }
                 </td>
                 <td>
