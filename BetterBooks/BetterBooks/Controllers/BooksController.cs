@@ -100,13 +100,21 @@ namespace BetterBooks.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "Title,Author,Year,Description")] Book book)
+        public ActionResult Create([Bind(Include = "Title,Author,Year,Description,NewImage")] Book book)
         {
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
                 book.OwnerId = userId;
                 book.DateAdded = DateTime.Now;
+
+                if (book.NewImage != null)
+                {
+                    var bytes = new byte[book.NewImage.ContentLength];
+                    book.NewImage.InputStream.Read(bytes, 0, bytes.Length);
+                    book.Image = bytes;
+                }
+
                 db.Books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
