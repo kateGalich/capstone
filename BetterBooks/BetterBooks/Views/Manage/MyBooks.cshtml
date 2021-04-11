@@ -14,7 +14,7 @@
             <th>Title</th>
             <th>Author</th>
             <th>Year</th>
-            <th>Status</th>
+            @* <th>Status</th>*@
         </tr>
 
         @foreach (var item in Model.MyBooks)
@@ -30,16 +30,17 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Year)
                 </td>
+                @*<td>
+                        @Html.CheckBox("AllowToBorrow", true) Allow to borrow
+                    </td>
+                *@
                 <td>
-                    @Html.CheckBox("AllowToBorrow", true) Allow to borrow
-                </td>
-                <td>
-                            @Html.ActionLink("Edit", "Edit", "Books", new { id = item.Id }, new { @class = "btn btn-primary" })
-                            @Html.ActionLink("Delete", "Delete", "Books", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Edit", "Edit", "Books", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", "Books", new { id = item.Id }, new { @class = "btn btn-primary" })
                 </td>
             </tr>
         }
     </table>
-            @Html.ActionLink("Add new book", "Create", "Books", new { @class = "btn btn-primary" })
-    </div>
+    @Html.ActionLink("Add new book", "Create", "Books", new { @class = "btn btn-primary" })
+</div>
 
