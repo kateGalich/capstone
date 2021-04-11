@@ -22,6 +22,7 @@ namespace BetterBooks.Models
 
         [StringLength(500)]
         public string Review { get; set; }
+        public int RateValue { get; set; }
 
         public virtual ApplicationUser User { get; set; }
         public virtual Book Book { get; set; }
