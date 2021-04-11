@@ -246,28 +246,38 @@ namespace BetterBooks.Controllers
             //dynamic myModel = new ExpandoObject();
             //myModel.bookList = db.BookReviews.Where(p => p.BookId == id).ToList();
             List<BookReview> bookList = db.BookReviews.Where(p => p.BookId == id).ToList();
-            ViewData["book"] = id;
-            ViewData["book1"] = db.BookReviews.Find(id);
-
+            //ViewData["book"] = id;
+            //ViewData["book1"] = db.BookReviews.Find(id);
+            ReviewVM model = new ReviewVM();
+            BookReview review = new BookReview
+            {
+                BookId = id.GetValueOrDefault(),
+            };
+            model.BookReview = review;
             if (bookList != null)
             {
-                return View(bookList);
+                model.BookReviews = bookList;
             }
+            //if (bookList != null)
+            //{
+            //    return View(bookList);
+            //}
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Review([Bind(Include = "Review")] BookReview bookReview, int id)
+        public ActionResult Review(/*[Bind(Include = "Review")]*/ ReviewVM model)
         {
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
-                bookReview.UserId = userId;
-                bookReview.BookId = id;
-                db.BookReviews.Add(bookReview);
+               model.BookReview.UserId = userId;
+             //  model. BookReview.BookId = id;
+                db.BookReviews.Add(model.BookReview);
                 db.SaveChanges();
-                return RedirectToAction("Review");
+               // return RedirectToAction("Review",nameof { });
+                return RedirectToAction(nameof(Review), new { id = model.BookReview.BookId });
             }
 
             return View();
