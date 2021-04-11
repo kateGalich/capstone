@@ -70,7 +70,7 @@
                         data: { "userId": popover.attr('data-id') },
                         datatype: "json",
                         success: function (data) {
-                            popover.data('bs.popover').tip().find('.popover-content').html(data);
+                            $('.popover-body').html(data);
                         }
                     });
                 });
