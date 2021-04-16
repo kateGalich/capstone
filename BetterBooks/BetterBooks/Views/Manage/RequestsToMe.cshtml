@@ -79,7 +79,7 @@
         <script>
             $(function () {
                 $('[data-toggle="popover"]').popover();
-                $('.popover-user-info').on('inserted.bs.popover', function () {
+                $('.popover-user-info').on('show.bs.popover', function () {
                     var popover = $(this);
                     $.ajax({
                         type: "GET",
@@ -88,7 +88,7 @@
                         data: { "userId": popover.attr('data-id') },
                         datatype: "json",
                         success: function (data) {
-                            $('.popover-body').html(data);
+                            popover.data('bs.popover').tip().find('.popover-content').html(data);
                         }
                     });
                 });

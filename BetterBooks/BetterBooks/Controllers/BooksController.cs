@@ -5,7 +5,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using BetterBooks.Models;
 using Microsoft.AspNet.Identity;
@@ -85,7 +84,12 @@ namespace BetterBooks.Controllers
             {
                 return HttpNotFound();
             }
-            return View(book);
+            BookVM model = new BookVM
+            {
+                Book=book,
+              RevCount=  db.BookReviews.Where(p => p.BookId == id).Count()
+            };
+            return View(model);
         }
 
         // GET: Books/Create
@@ -101,21 +105,13 @@ namespace BetterBooks.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "Title,Author,Year,Description,NewImage")] Book book)
+        public ActionResult Create([Bind(Include = "Title,Author,Year,Description")] Book book)
         {
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
                 book.OwnerId = userId;
                 book.DateAdded = DateTime.Now;
-
-                if (book.NewImage != null)
-                {
-                    var bytes = new byte[book.NewImage.ContentLength];
-                    book.NewImage.InputStream.Read(bytes, 0, bytes.Length);
-                    book.Image = bytes;
-                }
-
                 db.Books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -234,20 +230,6 @@ namespace BetterBooks.Controllers
                 {
                     UserId = userId,
                 });
-
-                // Initialize WebMail helper
-                //WebMail.EnableSsl = true;
-                //WebMail.SmtpServer = "smtp.gmail.com";
-                //WebMail.SmtpPort = 587;
-                //WebMail.UserName = "betterbookssite@gmail.com";
-                //WebMail.Password = "q1q1q1q1q!";
-                //WebMail.From = "betterbookssite@gmail.com";
-
-                // Send email
-                WebMail.Send(to: book.Owner.Email,
-                    subject: "New book request",
-                    body: "You have a new book request!"
-                );
             }
             db.SaveChanges();
 
@@ -277,9 +259,14 @@ namespace BetterBooks.Controllers
                 BookId = id.GetValueOrDefault(),
             };
             model.BookReview = review;
+            if(id!=null)
+            {
+                model.Book = db.Books.Find(id);
+            }
             if (bookList != null)
             {
                 model.BookReviews = bookList;
+                model.Revcount = bookList.Count;
             }
             //if (bookList != null)
             //{
@@ -295,11 +282,11 @@ namespace BetterBooks.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
-                model.BookReview.UserId = userId;
-                //  model. BookReview.BookId = id;
+               model.BookReview.UserId = userId;
+             //  model. BookReview.BookId = id;
                 db.BookReviews.Add(model.BookReview);
                 db.SaveChanges();
-                // return RedirectToAction("Review",nameof { });
+               // return RedirectToAction("Review",nameof { });
                 return RedirectToAction(nameof(Review), new { id = model.BookReview.BookId });
             }
 
