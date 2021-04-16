@@ -9,17 +9,17 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <h2>@ViewBag.Title</h2>
 
-     @using (Html.BeginForm())
+@using (Html.BeginForm())
 {
-<h5>Find by Title: </h5>
+    <h5>Find by Title: </h5>
     <p>
         @Html.TextBox("searchOrder")
         <input type="submit" value="Search" class="btn btn-primary" />
     </p>
 }
 
-@Html.ActionLink("Add new book", "Create", "Books", new { @class = "btn btn-primary" })
-     
+@Html.ActionLink("Add new book", "Create", "Books", new { }, new { @class = "btn btn-primary" })
+
 <table class="table">
     <tr>
         <th>
