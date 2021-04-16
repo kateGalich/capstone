@@ -1,4 +1,4 @@
-﻿@model BetterBooks.Models.Book
+﻿@model BetterBooks.Models.BookVM
 @using Microsoft.AspNet.Identity;
 
 
@@ -7,104 +7,115 @@
     string userId = User.Identity.GetUserId();
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Book</h4>
-    <hr />
-
-    @if (Model.Image == null)
-    {
-        <img width="160" height="160" src="~/Content/default_cover.jpg" />
-    }
-    else
-    {
-        <img width="160" height="160" src="/Books/Image/@Model.Id" />
-    }
-
-    <dl class="dl-horizontal">
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Author)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OwnerId)
-        </dt>
-    </dl>
-
-
-    @*POST: Books/RequestBook/5*@
-
-    @if (User.Identity.IsAuthenticated)
-    {
-        if (userId != Model.OwnerId)
+<h2 class="text-center">Details</h2>
+<hr />
+<div class="row">
+    @*<h4>Book</h4>
+    <hr />*@
+    <div class="col-md-4">
+        @if (Model.Book.Image == null)
         {
-            <div>
-                @using (Html.BeginForm("RequestBook", "Books", new { id = Model.Id, returnAction = "Details", returnId = Model.Id }))
-                {
-                    @Html.AntiForgeryToken()
-
-                    if (Model.RequestedByUsers.Any(request => request.UserId == userId))
-                    {
-                        <input type="submit" value="Cancel Request" class="btn btn-info" />
-                    }
-                    else
-                    {
-                        <input type="submit" value="Request it" class="btn btn-primary" />
-                    }
-
-                }
-            </div>
+            <img width="160" height="160" src="~/Content/default_cover.jpg" />
         }
-    }
-    else
-    {
-        <br>
-        <h5>Log in to request the book</h5>
-    }
+        else
+        {
+            <img width="160" height="160" src="/Books/Image/@Model.Book.Id" />
+        }
+    </div>
+   
+    <div class="col-md-8">
+        <h3>@Model.Book.Title</h3>
+        <h5>@Model.Book.Author</h5>
+        <h5>Reviews (<span class="text-primary">@Model.RevCount</span>)</h5>
+        <h6>Description</h6>
+        <p>@Model.Book.Description</p>
+        <h5>@Model.Book.Year</h5>
+        <!--<dl class="dl-horizontal">-->
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Book.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Book.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Book.Author)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Book.Author)
+            </dd>
+
+            <!--<dt>
+                @Html.DisplayNameFor(model => model.Book.Year)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Book.Year)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Book.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Book.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Book.OwnerId)
+            </dt>
+        </dl>*@
+
+
+        @*POST: Books/RequestBook/5*@
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (userId != Model.Book.OwnerId)
+            {
+                <div>
+                    @using (Html.BeginForm("RequestBook", "Books", new { id = Model.Book.Id, returnAction = "Details", returnId = Model.Book.Id }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        if (Model.Book.RequestedByUsers.Any(request => request.UserId == userId))
+                        {
+                            <input type="submit" value="Cancel Request" class="btn btn-info" />
+                        }
+                        else
+                        {
+                            <input type="submit" value="Request it" class="btn btn-primary" />
+                        }
+
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <br>
+            <h5>Log in to request the book</h5>
+        }
+        <p>
+            @if (User.Identity.GetUserId() == Model.Book.OwnerId)
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Book.Id })
+            }
+            |
+            @if (User.Identity.GetUserId() == Model.Book.OwnerId)
+            {
+                @Html.ActionLink("Delete", "Delete", new { id = Model.Book.Id })
+            }
+            |
+            @Html.ActionLink("Back to List", "Index") |
+
+            @Html.ActionLink("View or Add Reviews", "Review", new { id = Model.Book.Id }, new { @class = "btn btn-primary" })
+        </p>
+    </div>
+    
 
 
 </div>
-<p>
-    @if (User.Identity.GetUserId() == Model.OwnerId)
-    {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
-    }
-    |
-    @if (User.Identity.GetUserId() == Model.OwnerId)
-    { 
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
-    }
-    |
-    @Html.ActionLink("Back to List", "Index") |
-    @Html.ActionLink("View or Add Reviews", "Review", new { id = Model.Id })
-</p>
+
