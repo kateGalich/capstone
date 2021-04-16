@@ -4,41 +4,53 @@
     ViewBag.Title = "Review";
 }
 
-<h2 class="text-center">Review</h2>
-<hr />
+<h2>Review</h2>
+
 
 @*@{
         BetterBooks.Models.BookReview book = ViewData["book1"] as BetterBooks.Models.BookReview;
     }*@
-<div class="row">
-    @*<h4>Book</h4>
-        <hr />*@
-    <div class="col-md-4">
-        @if (Model.Book.Image == null)
-        {
-            <img width="160" height="160" src="~/Content/default_cover.jpg" />
-        }
-        else
-        {
-            <img width="160" height="160" src="/Books/Image/@Model.Book.Id" />
-        }
-    </div>
 
-    <div class="col-md-8">
-        <h3>@Model.Book.Title</h3>
-        <h5>@Model.Book.Author</h5>
-        <h5>Reviews (<span class="text-primary">@Model.Revcount</span>)</h5>
-        <h6>Description</h6>
-        <p>@Model.Book.Description</p>
-        <h5>@Model.Book.Year</h5>
-    </div>
-</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookReviews)
+        </th>
 
-@if (User.Identity.IsAuthenticated)
-{  <header class='header text-center'>
-        <h2>Add Rating </h2>
+        <th>Rating</th>
+    </tr>
 
-    </header>
+
+    @foreach (var item in Model.BookReviews)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Review)
+            </td>
+            <td>
+
+                @for (int i = 1; i <= 5; i++)
+                {
+                    if (i <= item.RateValue)
+                    {
+                        <span style="color: #FF912C;" class="fa fa-star"></span>
+                    }
+                    else
+                    {
+                        <span class="fa fa-star selected"></span>
+                    }
+                }
+            </td>
+
+        </tr>
+    }
+
+
+</table>
+<header class='header text-center'>
+    <h2>Rating </h2>
+
+</header>
 
 <section class='rating-widget'>
 
@@ -78,12 +90,12 @@
 
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-4">
         <form asp-action="Review" @*asp-route-id="@ViewData["book"]"*@ method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="BookReview.Review" class="control-label">Add a written Reviews</label>
-                @Html.EditorFor(model => model.BookReview.Review, new { htmlAttributes = new { style = "width:500px", @class = "form-control" } })
+                <label asp-for="BookReview.Review" class="control-label"></label>
+                @Html.EditorFor(model => model.BookReview.Review, new { htmlAttributes = new { @class = "form-control" } })
                 @*<input asp-for="BookReview.Review" class="form-control" />*@
                 @Html.HiddenFor(model => model.BookReview.RateValue, new { id = "hat" })
                 @Html.HiddenFor(model => model.BookReview.BookId)
@@ -96,48 +108,9 @@
         </form>
     </div>
 </div>
-}
-<h1 class="text-center">Reviews</h1>
-<hr />
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BookReviews)
-        </th>
 
-        <th>Rating</th>
-    </tr>
-
-
-    @foreach (var item in Model.BookReviews)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Review)
-            </td>
-            <td>
-
-                @for (int i = 1; i <= 5; i++)
-                {
-                    if (i <= item.RateValue)
-                    {
-                        <span style="color: #FF912C;" class="fa fa-star"></span>
-                    }
-                    else
-                    {
-                        <span class="fa fa-star selected"></span>
-                    }
-                }
-            </td>
-
-        </tr>
-    }
-
-
-</table>
-<h3>Reviews <span>(@Model.Revcount)</span></h3>
 <div>
-    @Html.ActionLink("Go back", "Details", new { id = Model.Book.Id })
+    @Html.ActionLink("Go back", "Details", new { id = ViewData["book"] })
 </div>
 
 @section Scripts {

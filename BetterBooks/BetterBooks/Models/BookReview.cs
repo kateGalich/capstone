@@ -21,7 +21,6 @@ namespace BetterBooks.Models
         public string UserId { get; set; }
 
         [StringLength(500)]
-        [DataType(DataType.MultilineText)]
         public string Review { get; set; }
         public int RateValue { get; set; }
 
