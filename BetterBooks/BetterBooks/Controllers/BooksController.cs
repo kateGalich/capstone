@@ -244,10 +244,14 @@ namespace BetterBooks.Controllers
                 //WebMail.From = "betterbookssite@gmail.com";
 
                 // Send email
-                WebMail.Send(to: book.Owner.Email,
-                    subject: "New book request",
-                    body: "You have a new book request!"
-                );
+                try
+                {
+                    WebMail.Send(to: book.Owner.Email,
+                        subject: "New book request",
+                        body: "You have a new book request!"
+                    );
+                }
+                catch { }
             }
             db.SaveChanges();
 
