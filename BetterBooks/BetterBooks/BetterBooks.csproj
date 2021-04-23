@@ -198,6 +198,7 @@
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookRequest.cs" />
     <Compile Include="Models\BookReview.cs" />
+    <Compile Include="Models\BookVM.cs" />
     <Compile Include="Models\BorrowedBook.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
