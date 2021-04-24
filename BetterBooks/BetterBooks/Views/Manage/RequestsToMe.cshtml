@@ -36,7 +36,7 @@
                     @foreach (var bookRequest in book.RequestedByUsers)
                     {
                         <div>
-                            <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@bookRequest.User.UserName" data-toggle="popover" data-id="@bookRequest.User.Id" data-trigger="focus">@bookRequest.User.UserName</a>
+                            <a href="#" role="button" class="btn btn-info popover-user-info" title="@bookRequest.User.UserName" data-toggle="popover" data-id="@bookRequest.User.Id" data-trigger="focus">@bookRequest.User.UserName</a>
 
 
                             @using (Html.BeginForm("AcceptRequest", "Books", new
@@ -46,7 +46,7 @@
                             }, FormMethod.Post, new { style = "display:inline-block" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="submit" value="Accept" class="btn btn-primary" />
+                                <input type="submit" value="Accept" class="btn btn-success" />
                             }
 
                             @using (Html.BeginForm("RejectRequest", "Books", new
@@ -56,7 +56,7 @@
                             }, FormMethod.Post, new { style = "display:inline-block" }))
                             {
                                 @Html.AntiForgeryToken()
-                                <input type="submit" value="Reject" class="btn btn-secondary" />
+                                <input type="submit" value="Reject" class="btn btn-danger" />
                             }
 
                             @if (bookRequest.Status != null)

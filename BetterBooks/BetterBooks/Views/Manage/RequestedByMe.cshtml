@@ -34,7 +34,7 @@
                 <td>
                     @if (bookRequest.Status == "accepted")
                     {
-                        <a href="#" role="button" class="btn btn-secondary popover-user-info" title="@bookRequest.Book.Owner.UserName" data-toggle="popover" data-id="@bookRequest.Book.OwnerId" data-trigger="focus">Contact info</a>
+                        <a href="#" role="button" class="btn btn-info popover-user-info" title="@bookRequest.Book.Owner.UserName" data-toggle="popover" data-id="@bookRequest.Book.OwnerId" data-trigger="focus">Contact info</a>
                     }
                     else
                     {
@@ -45,7 +45,7 @@
                     @using (Html.BeginForm("RequestBook", "Books", new { id = bookRequest.Book.Id, returnAction = "RequestedByMe", returnController = "Manage" }))
                     {
                         @Html.AntiForgeryToken()
-                        <input type="submit" value="Cancel Request" class="btn btn-secondary" />
+                        <input type="submit" value="Cancel Request" class="btn btn-danger" />
                     }
                 </td>
                 <td>
