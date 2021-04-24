@@ -1,13 +1,12 @@
 @model IEnumerable<BetterBooks.Models.Book>
 @using Microsoft.AspNet.Identity;
-
 @{
     ViewBag.Title = "Catalogue";
     var userId = User.Identity.GetUserId();
 
 }
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<h2>@ViewBag.Title</h2>
+
+<h1>@ViewBag.Title</h1>
 
 @using (Html.BeginForm())
 {
