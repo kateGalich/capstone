@@ -7,8 +7,10 @@ namespace BetterBooks.Models
 {
     public class ReviewVM
     {
-       public List<BookReview> BookReviews { get; set; }
-       public BookReview BookReview { get; set; }
-        
+        public List<BookReview> BookReviews { get; set; }
+        public BookReview BookReview { get; set; }
+        public Book Book { get; set; }
+        public int Revcount { get; set; }
+
     }
 }

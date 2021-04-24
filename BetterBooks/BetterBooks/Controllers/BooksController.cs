@@ -85,7 +85,12 @@ namespace BetterBooks.Controllers
             {
                 return HttpNotFound();
             }
-            return View(book);
+            BookVM model = new BookVM
+            {
+                Book = book,
+                RevCount = db.BookReviews.Where(p => p.BookId == id).Count()
+            };
+            return View(model);
         }
 
         // GET: Books/Create
@@ -281,9 +286,14 @@ namespace BetterBooks.Controllers
                 BookId = id.GetValueOrDefault(),
             };
             model.BookReview = review;
+            if (id != null)
+            {
+                model.Book = db.Books.Find(id);
+            }
             if (bookList != null)
             {
                 model.BookReviews = bookList;
+                model.Revcount = bookList.Count;
             }
             //if (bookList != null)
             //{
